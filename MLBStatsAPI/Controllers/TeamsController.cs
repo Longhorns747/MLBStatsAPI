@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Collections.Generic;
 using MLBStatsAPI.Models;
 using System.Data.SqlClient;
 using System.Data;
@@ -21,19 +20,7 @@ namespace MLBStatsAPI.Controllers
                 WHERE t.teamID = '" + id + @"'
                 ORDER BY t.yearID desc";
 
-            string connStr = ConfigurationManager.ConnectionStrings["dbConnectionStr"].ConnectionString;
-
-            SqlConnection sqlConnection1 = new SqlConnection(connStr);
-            SqlCommand cmd = new SqlCommand();
-            SqlDataReader reader;
-
-            cmd.CommandText = query;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = sqlConnection1;
-
-            sqlConnection1.Open();
-
-            reader = cmd.ExecuteReader();
+            SqlDataReader reader = dbConnect(query);
             // Data is accessible through the DataReader object here.
             List<TeamYear> yearStats = new List<TeamYear>();
             Team teamData = new Team();
@@ -52,13 +39,28 @@ namespace MLBStatsAPI.Controllers
 
             teamData.yearRecords = yearStats;
 
-            sqlConnection1.Close();
-
             if (teamData == null)
             {
                 return NotFound();
             }
             return Ok(teamData);
+        }
+
+        public SqlDataReader dbConnect(string query)
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["dbConnectionStr"].ConnectionString;
+
+            SqlConnection sqlConnection1 = new SqlConnection(connStr);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader reader;
+
+            cmd.CommandText = query;
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = sqlConnection1;
+
+            sqlConnection1.Open();
+            reader = cmd.ExecuteReader();
+            return reader;
         }
     }
 }
