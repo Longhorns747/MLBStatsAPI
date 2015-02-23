@@ -15,7 +15,7 @@ namespace MLBStatsAPI.Controllers
     {
         public IHttpActionResult GetTeam(string id)
         {
-            string query = @"SELECT TOP 10 name, yearID, W, L, R, (H + 0.0) / (AB + 0.0) AS AVG, ERA
+            string query = @"SELECT TOP 10 name, yearID, W, L, R, RA, HR, FP, H, AB, ERA
                 FROM localbaseballdb.teams as t
                 WHERE t.teamID = '" + id + @"'
                 ORDER BY t.yearID desc";
@@ -34,8 +34,13 @@ namespace MLBStatsAPI.Controllers
                 currYear.W = reader.GetInt32(2);
                 currYear.L = reader.GetInt32(3);
                 currYear.R = reader.GetInt32(4);
-                currYear.AVG = Math.Round((double)reader.GetDecimal(5), 3);
-                currYear.ERA = Math.Round((double)reader.GetDouble(6), 2);
+                currYear.RA = reader.GetInt32(5);
+                currYear.HR = reader.GetInt32(6);
+                currYear.FP = reader.GetDouble(7);
+                int H = reader.GetInt32(8);
+                int AB = reader.GetInt32(9);
+                currYear.AVG = Math.Round((double)H / AB, 3);
+                currYear.ERA = Math.Round((double)reader.GetDouble(10), 2);
                 yearStats.Add(currYear);
             }
 

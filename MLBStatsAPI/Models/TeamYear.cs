@@ -11,6 +11,9 @@ namespace MLBStatsAPI.Models
         public int W { get; set; }
         public int L { get; set; }
         public int R { get; set; }
+        public int RA { get; set; }
+        public int HR { get; set; }
+        public double FP { get; set; }
         public double AVG { get; set; }
         public double ERA { get; set; }
     }
