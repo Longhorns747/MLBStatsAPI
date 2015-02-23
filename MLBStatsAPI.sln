@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLBStatsAPI", "MLBStatsAPI\MLBStatsAPI.csproj", "{C694DF83-FBB1-46E7-B282-80B54EA81D9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{43660EF9-0BA6-4835-99AD-71AE0530CA18}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{58651911-27C4-4B76-9226-E7BA1A139E20}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\MLBStatsAPI-WAWS-dev.json = PublishScripts\Configurations\MLBStatsAPI-WAWS-dev.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CC21C626-E68A-4EBF-AC7C-FEC6E0D34C99}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C694DF83-FBB1-46E7-B282-80B54EA81D9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C694DF83-FBB1-46E7-B282-80B54EA81D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C694DF83-FBB1-46E7-B282-80B54EA81D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C694DF83-FBB1-46E7-B282-80B54EA81D9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{58651911-27C4-4B76-9226-E7BA1A139E20} = {43660EF9-0BA6-4835-99AD-71AE0530CA18}
+	EndGlobalSection
+EndGlobal
