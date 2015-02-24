@@ -1,5 +1,5 @@
 # MLBStatsAPI
-A free, open-source API for MLB statistics.
+A free, open-source API for MLB statistics. Statistics come from the open-source Sean Lahman database, updated yearly.
 
 Base URL: mlbstatsapi.azurewebsites.net/api/
 
