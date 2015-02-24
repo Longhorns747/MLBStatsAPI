@@ -13,7 +13,8 @@ namespace MLBStatsAPI.Controllers
 {
     public class TeamsController : ApiController
     {
-        string[] STATS = { "W", "L", "R", "RA", "HR", "FP", "CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG", "ERA" };
+        string[] STATS = { "W", "L", "R", "RA", "HR", "FP", 
+                             "CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG", "CAST(ERA as decimal(38, 2)) AS ERA" };
         public IHttpActionResult GetTeam(string id)
         {
             string statString = "";
@@ -49,6 +50,8 @@ namespace MLBStatsAPI.Controllers
 
                 teamData.yearRecords[(int)reader["yearId"]] = currYear;
             }
+
+            reader.Close();
 
             if (teamData == null)
             {
