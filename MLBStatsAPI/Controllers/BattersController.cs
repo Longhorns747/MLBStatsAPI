@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using MLBStatsAPI.Models;
+using MLBStatsAPI.Utilities;
+using System.Data.SqlClient;
+using System.Data;
+
+namespace MLBStatsAPI.Controllers
+{
+    public class BattersController : ApiController
+    {
+        string[] STATS = { "teamID","G", "AB", "H", "HR" };
+        public IHttpActionResult GetTeam(string firstName, string lastName)
+        {
+            string statString = "";
+
+            foreach (string stat in STATS)
+            {
+                statString += stat + ", ";
+            }
+
+            statString = statString.Trim();
+            statString = statString.TrimEnd(',');
+
+            string query = @"SELECT nameLast, nameFirst, yearID, " + statString +
+                @" FROM localbaseballdb.master as m join localbaseballdb.batting as b on m.playerID = b.playerID
+                WHERE nameLast = '" + lastName + "' and nameFirst = '" + firstName + "'";
+
+            SqlDataReader reader = DBUtils.dbConnect(query);
+            DataTable schemaTable = reader.GetSchemaTable();
+            // Data is accessible through the DataReader object here.
+            Batter battingData = new Batter();
+            battingData.yearRecords = new Dictionary<int, Dictionary<string, string>>();
+
+            while (reader.Read())
+            {
+                battingData.nameLast = (battingData.nameLast == null) ? reader["nameLast"].ToString() : battingData.nameLast;
+                battingData.nameFirst = (battingData.nameFirst == null) ? reader["nameFirst"].ToString() : battingData.nameFirst;
+                Dictionary<string, string> currYear = new Dictionary<string, string>();
+
+                foreach (string stat in STATS)
+                {
+                    string statIdx = stat.Split(' ').Last();
+                    currYear[statIdx] = reader[statIdx].ToString();
+                }
+
+                battingData.yearRecords[(int)reader["yearId"]] = currYear;
+            }
+
+            reader.Close();
+
+            if (battingData == null)
+            {
+                return NotFound();
+            }
+            return Ok(battingData);
+        }
+    }
+}

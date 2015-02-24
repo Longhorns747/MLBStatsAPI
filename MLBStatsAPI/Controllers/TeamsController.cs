@@ -40,7 +40,7 @@ namespace MLBStatsAPI.Controllers
 
             while (reader.Read())
             {
-                teamData.name = (teamData.name == null) ? (string)reader["name"] : teamData.name;
+                teamData.name = (teamData.name == null) ? reader["name"].ToString() : teamData.name;
                 Dictionary<string, string> currYear = new Dictionary<string, string>();
 
                 foreach (string stat in STATS)
