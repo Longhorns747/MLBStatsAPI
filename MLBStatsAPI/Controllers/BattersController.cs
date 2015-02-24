@@ -13,7 +13,7 @@ namespace MLBStatsAPI.Controllers
 {
     public class BattersController : ApiController
     {
-        string[] STATS = { "teamID", "G", "AB", "H", "HR", "RBI", "SB",
+        string[] STATS = { "teamID", "G", "AB", "H", "HR", "RBI", "SB", "BB",
                              @"CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG",
                              @"CAST(ROUND((H+BB+HBP + 0.0) / (AB+BB+HBP+COALESCE(SF,0) + 0.0), 3) as decimal(38, 3)) AS OBP",
                              @"CAST(ROUND(((H + ""2B"" + 2 * ""3B"" + 3 * HR) + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS SLG" };

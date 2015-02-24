@@ -14,7 +14,7 @@ namespace MLBStatsAPI.Controllers
 {
     public class TeamsController : ApiController
     {
-        string[] STATS = { "W", "L", "R", "RA", "HR", "FP", 
+        string[] STATS = { "W", "L", "R", "RA", "HR", "FP",
                              "CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG", "CAST(ERA as decimal(38, 2)) AS ERA" };
         public IHttpActionResult GetTeam(string id)
         {
