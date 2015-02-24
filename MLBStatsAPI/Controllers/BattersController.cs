@@ -13,7 +13,9 @@ namespace MLBStatsAPI.Controllers
 {
     public class BattersController : ApiController
     {
-        string[] STATS = { "teamID","G", "AB", "H", "HR" };
+        string[] STATS = { "teamID", "G", "AB", "H", "HR", "RBI", 
+                             @"CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG",
+                             @"CAST(ROUND(((H + ""2B"" + 2 * ""3B"" + 3 * HR) + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS SLG" };
         public IHttpActionResult GetTeam(string firstName, string lastName)
         {
             string statString = "";
@@ -36,24 +38,27 @@ namespace MLBStatsAPI.Controllers
             Batter battingData = new Batter();
             battingData.yearRecords = new Dictionary<int, Dictionary<string, string>>();
 
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                battingData.nameLast = (battingData.nameLast == null) ? reader["nameLast"].ToString() : battingData.nameLast;
-                battingData.nameFirst = (battingData.nameFirst == null) ? reader["nameFirst"].ToString() : battingData.nameFirst;
-                Dictionary<string, string> currYear = new Dictionary<string, string>();
-
-                foreach (string stat in STATS)
+                while (reader.Read())
                 {
-                    string statIdx = stat.Split(' ').Last();
-                    currYear[statIdx] = reader[statIdx].ToString();
-                }
+                    battingData.nameLast = (battingData.nameLast == null) ? reader["nameLast"].ToString() : battingData.nameLast;
+                    battingData.nameFirst = (battingData.nameFirst == null) ? reader["nameFirst"].ToString() : battingData.nameFirst;
+                    Dictionary<string, string> currYear = new Dictionary<string, string>();
 
-                battingData.yearRecords[(int)reader["yearId"]] = currYear;
+                    foreach (string stat in STATS)
+                    {
+                        string statIdx = stat.Split(' ').Last();
+                        currYear[statIdx] = reader[statIdx].ToString();
+                    }
+
+                    battingData.yearRecords[(int)reader["yearId"]] = currYear;
+                }
             }
 
             reader.Close();
 
-            if (battingData == null)
+            if (battingData.nameLast == null)
             {
                 return NotFound();
             }

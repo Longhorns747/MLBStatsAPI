@@ -38,23 +38,26 @@ namespace MLBStatsAPI.Controllers
             Team teamData = new Team();
             teamData.yearRecords = new Dictionary<int, Dictionary<string, string>>();
 
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                teamData.name = (teamData.name == null) ? reader["name"].ToString() : teamData.name;
-                Dictionary<string, string> currYear = new Dictionary<string, string>();
-
-                foreach (string stat in STATS)
+                while (reader.Read())
                 {
-                    string statIdx = stat.Split(' ').Last(); 
-                    currYear[statIdx] = reader[statIdx].ToString();
-                }
+                    teamData.name = (teamData.name == null) ? reader["name"].ToString() : teamData.name;
+                    Dictionary<string, string> currYear = new Dictionary<string, string>();
 
-                teamData.yearRecords[(int)reader["yearId"]] = currYear;
+                    foreach (string stat in STATS)
+                    {
+                        string statIdx = stat.Split(' ').Last();
+                        currYear[statIdx] = reader[statIdx].ToString();
+                    }
+
+                    teamData.yearRecords[(int)reader["yearId"]] = currYear;
+                }
             }
 
             reader.Close();
 
-            if (teamData == null)
+            if (teamData.name == null)
             {
                 return NotFound();
             }
