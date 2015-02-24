@@ -8,6 +8,7 @@ using MLBStatsAPI.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using MLBStatsAPI.Utilities;
 
 namespace MLBStatsAPI.Controllers
 {
@@ -31,7 +32,7 @@ namespace MLBStatsAPI.Controllers
                 WHERE t.teamID = '" + id + @"'
                 ORDER BY t.yearID desc";
 
-            SqlDataReader reader = dbConnect(query);
+            SqlDataReader reader = DBUtils.dbConnect(query);
             DataTable schemaTable = reader.GetSchemaTable();
             // Data is accessible through the DataReader object here.
             Team teamData = new Team();
@@ -58,23 +59,6 @@ namespace MLBStatsAPI.Controllers
                 return NotFound();
             }
             return Ok(teamData);
-        }
-
-        public SqlDataReader dbConnect(string query)
-        {
-            string connStr = ConfigurationManager.ConnectionStrings["dbConnectionStr"].ConnectionString;
-
-            SqlConnection sqlConnection1 = new SqlConnection(connStr);
-            SqlCommand cmd = new SqlCommand();
-            SqlDataReader reader;
-
-            cmd.CommandText = query;
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = sqlConnection1;
-
-            sqlConnection1.Open();
-            reader = cmd.ExecuteReader();
-            return reader;
         }
     }
 }

@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DBUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
