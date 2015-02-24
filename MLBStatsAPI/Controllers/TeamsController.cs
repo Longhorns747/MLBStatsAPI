@@ -13,38 +13,42 @@ namespace MLBStatsAPI.Controllers
 {
     public class TeamsController : ApiController
     {
+        string[] STATS = { "W", "L", "R", "RA", "HR", "FP", "CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG", "ERA" };
         public IHttpActionResult GetTeam(string id)
         {
-            string query = @"SELECT TOP 10 name, yearID, W, L, R, RA, HR, FP, H, AB, ERA
-                FROM localbaseballdb.teams as t
+            string statString = "";
+
+            foreach(string stat in STATS) {
+                statString += stat + ", ";
+            }
+
+            statString = statString.Trim();
+            statString = statString.TrimEnd(',');
+
+            string query = @"SELECT TOP 10 name, yearID," + statString +
+                @" FROM localbaseballdb.teams as t
                 WHERE t.teamID = '" + id + @"'
                 ORDER BY t.yearID desc";
 
             SqlDataReader reader = dbConnect(query);
+            DataTable schemaTable = reader.GetSchemaTable();
             // Data is accessible through the DataReader object here.
-            List<TeamYear> yearStats = new List<TeamYear>();
             Team teamData = new Team();
+            teamData.yearRecords = new Dictionary<int, Dictionary<string, string>>();
 
             while (reader.Read())
             {
-                teamData.name = (teamData.name == null) ? reader.GetString(0) : teamData.name;
+                teamData.name = (teamData.name == null) ? (string)reader["name"] : teamData.name;
+                Dictionary<string, string> currYear = new Dictionary<string, string>();
 
-                TeamYear currYear = new TeamYear();
-                currYear.year = reader.GetInt32(1);
-                currYear.W = reader.GetInt32(2);
-                currYear.L = reader.GetInt32(3);
-                currYear.R = reader.GetInt32(4);
-                currYear.RA = reader.GetInt32(5);
-                currYear.HR = reader.GetInt32(6);
-                currYear.FP = reader.GetDouble(7);
-                int H = reader.GetInt32(8);
-                int AB = reader.GetInt32(9);
-                currYear.AVG = Math.Round((double)H / AB, 3);
-                currYear.ERA = Math.Round((double)reader.GetDouble(10), 2);
-                yearStats.Add(currYear);
+                foreach (string stat in STATS)
+                {
+                    string statIdx = stat.Split(' ').Last(); 
+                    currYear[statIdx] = reader[statIdx].ToString();
+                }
+
+                teamData.yearRecords[(int)reader["yearId"]] = currYear;
             }
-
-            teamData.yearRecords = yearStats;
 
             if (teamData == null)
             {

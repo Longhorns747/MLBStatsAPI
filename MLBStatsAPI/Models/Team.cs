@@ -7,7 +7,7 @@ namespace MLBStatsAPI.Models
 {
     public class Team
     {
-        public List<TeamYear> yearRecords { get; set; }
+        public Dictionary<int, Dictionary<string, string>> yearRecords { get; set; }
         public String name { get; set; }
     }
 }
