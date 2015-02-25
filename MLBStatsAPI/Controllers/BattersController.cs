@@ -17,7 +17,7 @@ namespace MLBStatsAPI.Controllers
                              @"CAST(ROUND((H + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS AVG",
                              @"CAST(ROUND((H+BB+HBP + 0.0) / (AB+BB+HBP+COALESCE(SF,0) + 0.0), 3) as decimal(38, 3)) AS OBP",
                              @"CAST(ROUND(((H + ""2B"" + 2 * ""3B"" + 3 * HR) + 0.0) / (AB + 0.0), 3) as decimal(38, 3)) AS SLG" };
-        public IHttpActionResult GetTeam(string firstName, string lastName)
+        public IHttpActionResult GetBatter(string firstName, string lastName)
         {
             string statString = "";
 
