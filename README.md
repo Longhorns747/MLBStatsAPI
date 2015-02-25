@@ -1,13 +1,13 @@
 # MLBStatsAPI
-A free, open-source API for MLB statistics. Statistics come from the open-source Sean Lahman database, updated yearly.
+A free, open-source API for MLB statistics. Statistics come from the open-source Sean Lahman database.
 
-Base URL: mlbstatsapi.azurewebsites.net/api/
+Base URL: mlbstatsapi.azurewebsites.net/api/v0.1/
 
 ## Endpoints
 
 ###Team Data
 
-/api/teams/teamID (EX. /api/teams/bos, /api/teams/bal, /api/teams/ana)
+/teams/teamID (EX. /teams/bos, /teams/bal, /teams/ana)
 
 Sample Response Structure
 
@@ -18,13 +18,13 @@ Sample Response Structure
   "2011":{"W":"90","L":"72","R":"875","RA":"737","HR":"203","FP":"0.985","AVG":"0.280","ERA":"4.20"}, ...},
   "name":"Boston Red Sox"}
 
-TeamIDs follow the conventions held in Sean Lahman's database.
+TeamIDs follow the conventions held in Sean Lahman's database. Limited currently to the last 10 years of team data (I have more data, just don't want to overwhelm with hundreds of years worth of data per call :P).
 
 ###Player Data
 
 ####Batting Data
 
-/api/batters?firstname=FIRST_NAME&lastname=LAST_NAME (EX. /api/batters?firstname=david&lastname=ortiz)
+/batters?firstname=FIRST_NAME&lastname=LAST_NAME (EX. /batters?firstname=david&lastname=ortiz)
 
 Sample Response Structure
 
@@ -39,7 +39,7 @@ Names must match exactly.
 
 ####Pitching Data
 
-/api/pitchers?firstname=FIRST_NAME&lastname=LAST_NAME (EX. /api/pitchers?firstname=jon&lastname=lester)
+/pitchers?firstname=FIRST_NAME&lastname=LAST_NAME (EX. /pitchers?firstname=jon&lastname=lester)
 
 Sample Response Structure
 
