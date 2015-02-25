@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MLBStatsAPI.Models
 {
-    public class Batter
+    public class Player
     {
         public Dictionary<int, Dictionary<string, string>> yearRecords { get; set; }
         public string nameLast { get; set; }
