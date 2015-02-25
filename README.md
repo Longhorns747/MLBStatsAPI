@@ -7,7 +7,7 @@ Base URL: mlbstatsapi.azurewebsites.net/api/
 
 ###Team Data
 
-/api/teams/teamID (EX. api/teams/bos, api/teams/bal, api/teams/ana)
+/api/teams/teamID (EX. /api/teams/bos, /api/teams/bal, /api/teams/ana)
 
 Sample Response Structure
 
@@ -24,7 +24,7 @@ TeamIDs follow the conventions held in Sean Lahman's database.
 
 ####Batting Data
 
-/api/batters?firstname=FIRST_NAME&lastname=LAST_NAME (EX. api/batters?firstname=david&lastname=ortiz)
+/api/batters?firstname=FIRST_NAME&lastname=LAST_NAME (EX. /api/batters?firstname=david&lastname=ortiz)
 
 Sample Response Structure
 
@@ -36,3 +36,14 @@ Sample Response Structure
   "nameLast":"Ortiz","nameFirst":"David"}
 
 Names must match exactly.
+
+####Pitching Data
+
+/api/pitchers?firstname=FIRST_NAME&lastname=LAST_NAME (EX. /api/pitchers?firstname=jon&lastname=lester)
+
+Sample Response Structure
+
+{"yearRecords":
+  {"2006":{"teamID":"BOS","G":"15","W":"7","L":"2","IP":"81.3","GS":"15","SO":"60","BB":"43","CG":"0","SHO":"0","SV":"0","ERA":"4.76","BAOpp":"0.294","Kper9":"6.64","BBper9":"4.76"},
+  "2007":{"teamID":"BOS","G":"12","W":"4","L":"0","IP":"63.0","GS":"11","SO":"50","BB":"31","CG":"0","SHO":"0","SV":"0","ERA":"4.57","BAOpp":"0.257","Kper9":"7.14","BBper9":"4.43"},
+  "2008":{"teamID":"BOS","G":"33","W":"16","L":"6","IP":"210.3","GS":"33","SO":"152","BB":"66","CG":"2","SHO":"2","SV":"0","ERA":"3.21","BAOpp":"0.256","Kper9":"6.50","BBper9":"2.82"},...},"nameLast":"Lester","nameFirst":"Jon"}
